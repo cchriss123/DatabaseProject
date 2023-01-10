@@ -1,0 +1,223 @@
+create database labboration;
+
+
+CREATE TABLE mainCounty
+(
+    mainCountyId   INT PRIMARY KEY AUTO_INCREMENT,
+    mainCountyName VARCHAR(40)
+);
+
+CREATE TABLE countyFlower
+(
+    countyFloweriD     INT AUTO_INCREMENT PRIMARY KEY,
+    countyFlowerName   VARCHAR(40),
+    countyFlowerColor  VARCHAR(40),
+    mainCountyFlowerId INT,
+    FOREIGN KEY (mainCountyFlowerId) REFERENCES mainCounty (mainCountyId)
+);
+
+CREATE TABLE countyCeleb
+(
+    countyCelebId   INT AUTO_INCREMENT PRIMARY KEY,
+    countyCelebName VARCHAR(40),
+    countyCelebAge  INT,
+    mainCountyCeleb INT,
+    FOREIGN KEY (mainCountyCeleb) REFERENCES mainCounty (mainCountyId)
+);
+
+CREATE TABLE countyCity
+(
+    countyCityId         INT AUTO_INCREMENT PRIMARY KEY,
+    countyCityName       VARCHAR(40),
+    countyCityPopulation INT,
+    mainCountyCity       INT,
+    FOREIGN KEY (mainCountyCity) REFERENCES mainCounty (mainCountyId)
+);
+
+CREATE TABLE leaderboard
+(
+    leaderboardId     INT AUTO_INCREMENT PRIMARY KEY,
+    leaderBoardName   VARCHAR(50),
+    leaderBoardPoints INTEGER
+);
+
+CREATE UNIQUE INDEX idx_county ON mainCounty (mainCountyName);
+
+CREATE VIEW completeCounty AS
+SELECT mainCountyName, countyCityName, countyCelebName, countyFlowerName
+FROM mainCounty
+         INNER JOIN countyCeleb cC on mainCounty.mainCountyId = cC.mainCountyCeleb
+         INNER JOIN countyCity c on mainCounty.mainCountyId = c.mainCountyCity
+         INNER JOIN countyFlower cF on mainCounty.mainCountyId = cF.mainCountyFlowerId;
+
+drop table countyCeleb;
+drop table countyCity;
+drop table countyFlower;
+drop table leaderboard;
+drop table mainCounty;
+
+INSERT INTO mainCounty (mainCountyName)
+VALUES ('Blekinge'),
+       ('Bohuslän'),
+       ('Dalarna'),
+       ('Dalsland'),
+       ('Gotland'),
+       ('Gästrikland'),
+       ('Halland'),
+       ('Hälsingland'),
+       ('Härjedalen'),
+       ('Jämtland'),
+       ('Lappland'),
+       ('Medelpad'),
+       ('Norrbotten'),
+       ('Närke'),
+       ('Skåne'),
+       ('Småland'),
+       ('Södermanland'),
+       ('Uppland'),
+       ('Värmland'),
+       ('Västerbotten'),
+       ('Västergötland'),
+       ('Västmanland'),
+       ('Ångermanland'),
+       ('Öland'),
+       ('Östergötland');
+INSERT INTO countyCeleb (countyCelebName, countyCelebAge, mainCountyCeleb)
+VALUES ();
+INSERT INTO countyCity (countyCityName, countyCityPopulation, mainCountyCity)
+VALUES ();
+INSERT INTO countyFlower (countyFlowerName, countyFlowerColor, mainCountyFlowerId)
+VALUES ();
+INSERT INTO leaderboard (leaderBoardName, leaderBoardPoints)
+VALUES ();
+
+----------------------------------------------------------------------------
+
+LANDSKAPSID         LANDSKAP
+
+1                   Blekinge
+2                   Bohuslän
+3                   Dalarna
+4                   Dalsland
+5                   Gotland
+6                   Gästrikland
+7                   Halland
+8                   Hälsingland
+9                   Härjedalen
+10                  Jämtland
+11                  Lappland
+12                  Medelpad
+13                  Norrbotten
+14                  Närke
+15                  Skåne
+16                  Småland
+17                  Södermanland
+18                  Uppland
+19                  Värmland
+20                  Västerbotten
+21                  Västergötland
+22                  Västmanland
+23                  Ångermanland
+24                  Öland
+25                  Östergötland
+
+
+
+____________________________________________________________________________
+BLOMMOR         FÄRG      LANDSKAPSID
+INSERT INTO countyFlower (countyFlowerName, countyFlowerColor, mainCountyFlowerId)
+VALUES ('Kungsljus', 'grönvit', 1),
+       ('Vildkaprifol', 'vit', 2),
+       ('Ängsklocka', 'Blåviolett', 3),
+       ('Förgätmigej', 'Blå', 4),
+       ('Murgröna', 'Grön', 5),
+       ('Liljekonvalj', 'Vit', 6),
+       ('Hårginst', 'Blå', 7),
+       ('Lin', 'Blå', 8),
+       ('Mosippa', 'Gul', 9),
+       ('Brunkulla', 'Röd', 10),
+       ('Fjällsippa', 'Vit', 11),
+       ('Smörboll', 'Gul', 12),
+       ('Åkerbär', 'Mörkgrön', 13),
+       ('Gullviva', 'Gul', 14),
+       ('Prästkrage', 'Vit', 15),
+       ('Linnea', 'Vitrosa', 16),
+       ('Vit näckros', 'Vit', 17),
+       ('Kungsängslilja', 'Purpurröd', 18),
+       ('Skogsstjärna', 'Vit', 19),
+       ('Kung Karls spira', 'Gul', 20),
+       ('Ljung', 'Rosenviolett', 21),
+       ('Mistel', 'Grön', 22),
+       ('Styvmorsviol', 'Violett', 23),
+       ('Ölandssolvända', 'Gul', 24),
+       ('Blåklint', 'Blå', 25);
+
+
+
+----------------------------------------------------------------------------------------------
+INSERT INTO countyCeleb (countyCelebName, countyCelebAge, mainCountyCeleb)
+VALUES ('Henrik Schyffert', 54, 1),
+       ('Camilla läckberg', 48, 2),
+       ('Björn Skifs', 75, 3),
+       ('Ida Warg', 36, 4),
+       ('Babben Larsson', 66, 5),
+       ('Lasse Åberg', 82, 6),
+       ('Per Gessle', 63, 7),
+       ('Barbro ”Lill-Babs” Svensson', 80, 8),
+       ('Henning Mankell', 67, 9),
+       ('Henrik Lundqvist', 40, 10),
+       ('Anja Pärsson', 41, 11),
+       ('Gina Dirawi', 32, 12),
+       ('Liza Marklund', 60, 13),
+       ('Josef Fares', 45, 14),
+       ('Zlatan Ibrahimovic', 41, 15),
+       ('Astrid Lindgren', 94, 16),
+       ('Björn Borg', 66, 17),
+       ('Anders Celsius', 42, 18),
+       ('Kenny Bräck', 56, 19),
+       ('Erik ”Fricky” Friman', 30, 20),
+       ('Håkan Hellström', 48, 21),
+       ('Maria Montazami', 57, 22),
+       ('Arne Norlin', 75, 23),
+       ('Carola', 56, 24),
+       ('Plura Jonsson', 71, 25);
+
+
+------------------------------------------------------------
+
+INSERT INTO countyCity (countyCityName, countyCityPopulation, mainCountyCity)
+VALUES ('Karlskrona', 66675, 1),
+       ('Uddevalla', 31212, 2),
+       ('Falun', 37291, 3),
+       ('Åmål', 9065, 4),
+       ('Visby', 24330, 5),
+       ('Gävle', 75751, 6),
+       ('Halmstad', 70480, 7),
+       ('Hudiksvall', 15015, 8),
+       ('Sveg', 2547, 9),
+       ('Östersund', 49806, 10),
+       ('Kiruna', 17513, 11),
+       ('Sundsvall', 99449, 12),
+       ('Luleå', 78549, 13),
+       ('Örebro', 155989, 14),
+       ('Malmö', 344166, 15),
+       ('Jönköping', 93797, 16),
+       ('Eskilstuna', 67359, 17),
+       ('Stockholm', 975551, 18),
+       ('Karlstad', 61492, 19),
+       ('Umeå', 89607, 20),
+       ('Göteborg', 579281, 21),
+       ('Västerås', 127799, 22),
+       ('Örnsköldsvik', 32953, 23),
+       ('Färjestaden', 6212, 24),
+       ('Linköping', 115672, 25);
+
+
+CREATE VIEW averageAgeView AS
+SELECT AVG(celebAge) AS celebAgeAverage, celebName
+FROM countyCeleb
+         INNER JOIN mainCounty mC on countyCeleb.mainCountyCeleb = mC.mainCountyId
+
+GROUP BY celebName;
+
+DROP VIEW averageAgeView;
